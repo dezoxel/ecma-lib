@@ -50,7 +50,8 @@ saveWordTo = function(words, inputString, from, to) {
 };
 
 isAlpha = function(symbol) {
-  return symbol >= 'A' && symbol <= 'Z' || symbol >= 'a' && symbol <= 'z';
+  symbol = symbol.toLowerCase();
+  return symbol >= 'a' && symbol <= 'z';
 };
 
 isWordPunctuationMark = function(symbol) {

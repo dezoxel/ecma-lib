@@ -30,5 +30,14 @@ describe("String function", function(){
       expect(isAPartOfWord("'", 1, "I'm")).toBe(true);
     });
   });
+
+  describe("isWordPunctuationMark", function(){
+
+    it("has predefined set of allowed symbols", function(){
+      ["-", "'"].forEach(function(symbol, index, array){
+        expect(isWordPunctuationMark(symbol)).toBe(true);
+      });
+    });
+  });
   
 });

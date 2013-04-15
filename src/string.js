@@ -40,23 +40,38 @@ toWordsList = function(inputString) {
   saveWordTo(words, inputString, lastStartWordPos, i);
 
   return words;
-}
+};
 
 saveWordTo = function(words, inputString, from, to) {
   var lastWord = inputString.slice(from, to);
   if(lastWord != "") {
     words.push(lastWord);
   }
-}
+};
 
 isAlpha = function(symbol) {
   return symbol >= 'A' && symbol <= 'Z' || symbol >= 'a' && symbol <= 'z';
-}
+};
 
 isWordPunctuationMark = function(symbol) {
   return symbol == '-' || symbol == '\'';
-}
+};
 
 isAPartOfWord = function(symbol, symbolPos, inputString) {
   return isAlpha(inputString.charAt(symbolPos+1)) && isAlpha(inputString.charAt(symbolPos-1));
-}
+};
+
+//--------------------------------------------------------------------------------------------------------------------//
+maxLengthStringFrom = function(words, lengths = []) {
+  var size = words.length,
+      lengths = lengths || lengthsStringsFor(words);
+
+  return words[maxValueIndex(lengths)];
+};
+
+minLengthStringFrom = function(words, lengths = []) {
+  var size = words.length,
+      lengths = lengths || lengthsStringsFor(words);
+
+  return words[minValueIndex(lengths)];
+};

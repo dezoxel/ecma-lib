@@ -19,4 +19,16 @@ describe("String function", function(){
       expect(isAlpha(",")).toBe(false) ;
     });
   });
+
+  describe("isAPartOfWord", function(){
+
+    it("allows alphabetical symbols", function(){
+      expect(isAPartOfWord("r", 2, "world")).toBe(true);
+    });
+
+    it("requires that symbol was surrounded by alphabetical symbols", function(){
+      expect(isAPartOfWord("'", 1, "I'm")).toBe(true);
+    });
+  });
+  
 });

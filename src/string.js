@@ -58,8 +58,8 @@ isWordPunctuationMark = function(symbol) {
   return symbol == '-' || symbol == '\'';
 };
 
-isAPartOfWord = function(symbol, symbolPos, inputString) {
-  return isAlpha(inputString.charAt(symbolPos+1)) && isAlpha(inputString.charAt(symbolPos-1));
+isAPartOfWord = function(symbol, symbolPos, word) {
+  return isAlpha(word.charAt(symbolPos+1)) && isAlpha(word.charAt(symbolPos-1));
 };
 
 //--------------------------------------------------------------------------------------------------------------------//

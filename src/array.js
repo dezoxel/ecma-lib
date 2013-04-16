@@ -8,24 +8,23 @@ lengthsStringsFor = function(strings) {
   return lengths;
 };
 
-maxValueIndex = function(numbers) {
+maxOrMinIndexFrom = function(numbers, type = "max") {
   var count = numbers.length,
-      maxIndex = 0;
-  for(var i = maxIndex; i < count; i++) {
-    if(numbers[maxIndex] < numbers[i]) {
-      maxIndex = i;
-    }
-  }
-  return maxIndex;
-};
+      index = 0;
 
-minValueIndex = function(numbers) {
-  var count = numbers.length,
-      minIndex = 0;
-  for(var i = minIndex; i < count; i++) {
-    if(numbers[minIndex] > numbers[i]) {
-      minIndex = i;
+  if(count == 0) {
+    return -1;
+  }
+
+  if(["max", "min"].indexOf(type) == -1) {
+    return -1;
+  }
+
+  for(var i = index; i < count; i++) {
+    if(type == "max" && numbers[index] < numbers[i] ||
+       type == "min" && numbers[index] > numbers[i]) {
+      index = i;
     }
   }
-  return minIndex;
+  return index;
 };

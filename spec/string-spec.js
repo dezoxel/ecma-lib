@@ -55,20 +55,24 @@ describe("String function", function(){
       expect(isAPartOfWord("'", "I'm")).toBe(true);
     });
 
-    it("returns false if left symbol is not alphabetical", function(){
-      expect(isAPartOfWord("'", " 'em")).toBe(false);
-    });
+    describe("returns false", function(){
+      
+      it("if left symbol is not alphabetical", function(){
+        expect(isAPartOfWord("'", " 'em")).toBe(false);
+      });
 
-    it("returns false if right symbol is not alphabetical", function(){
-      expect(isAPartOfWord("+", "Max+ Company")).toBe(false);
-    });
+      it("if right symbol is not alphabetical", function(){
+        expect(isAPartOfWord("+", "Max+ Company")).toBe(false);
+      });
 
-    it("returns false if it is begin of string", function(){
-      expect(isAPartOfWord("+", "'em")).toBe(false);
-    });
+      it("if it is begin of string", function(){
+        expect(isAPartOfWord("+", "'em")).toBe(false);
+      });
 
-    it("returns false if it is end of string", function(){
-      expect(isAPartOfWord("+", "Max+")).toBe(false);
+      it("if it is end of string", function(){
+        expect(isAPartOfWord("+", "Max+")).toBe(false);
+      });
+
     });
 
   });

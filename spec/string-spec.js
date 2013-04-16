@@ -5,7 +5,7 @@ describe("String function", function(){
       cyrillicSymbols = function(){ return ["а", "в", "п", "о", "я"]; };
 
 
-  describe("isAlpha", function(){
+  describe("isAlpha()", function(){
 
     it("accepts only latin symbols", function(){
       latinSymbols().forEach(function(s){
@@ -33,7 +33,7 @@ describe("String function", function(){
 
   });
 
-  describe("isAPartOfWord", function(){
+  describe("isAPartOfWord()", function(){
 
     it("requires that symbol was surrounded by alphabetical symbols", function(){
       expect(isAPartOfWord("'", "I'm", 1)).toBe(true);
@@ -56,7 +56,7 @@ describe("String function", function(){
     });
 
     describe("returns false", function(){
-      
+
       it("if left symbol is not alphabetical", function(){
         expect(isAPartOfWord("'", " 'em")).toBe(false);
       });
@@ -77,7 +77,7 @@ describe("String function", function(){
 
   });
 
-  describe("isWordPunctuationMark", function(){
+  describe("isWordPunctuationMark()", function(){
     var punctuationMarksCutted = function(){ return ["!", "\"", "@", ":", ";", "*", "(", ")", "?", "."]; };
 
     it("allows to use '-' inside of word", function(){
@@ -101,4 +101,68 @@ describe("String function", function(){
     });
 
   });
+
+  describe("toWordsList()", function(){
+    var punctuationMarksCutted = function(){ return ["!", "\"", "@", ":", ";", "*", "(", ")", "?", "."]; };
+
+    describe("when whitespace", function() {
+
+      it("slices by space", function(){
+        expect(toWordsList("hello world")).toEqual(["hello", "world"]);
+      });
+
+      it("slices by new line character", function(){
+        expect(toWordsList("hello\nworld")).toEqual(["hello", "world"]);
+      });
+
+      it("slices by tabulation", function(){
+        expect(toWordsList("hello\tworld")).toEqual(["hello", "world"]);
+      });
+
+      it("ignores many whitespace characters between words", function(){
+        expect(toWordsList("hello  \n \t\t\t world")).toEqual(["hello", "world"]);
+      });
+
+    });
+
+    it("accepts one-symbol words", function(){
+      expect(toWordsList("a u")).toEqual(["a", "u"]);
+    });
+
+    it("doesn't slices by '-' character inside the word", function(){
+      expect(toWordsList("red-green-blue color")).toEqual(["red-green-blue", "color"]);
+    });
+
+    it("doesn't slices by ' character inside the word", function(){
+      expect(toWordsList("I'm super man")).toEqual(["I'm", "super", "man"]);
+    });
+
+    it("slices by any punctuation mark except ' and -", function(){
+      punctuationMarksCutted().forEach(function(s){
+        expect(toWordsList("hello" + s + "world")).toEqual(["hello", "world"]);
+      });
+    });
+
+    it("ignores punctuation marks at the begining", function(){
+      expect(toWordsList(",?&hello world")).toEqual(["hello", "world"]);
+    });
+
+    it("ignores punctuation marks at the end", function(){
+      expect(toWordsList("hello world&*$(#")).toEqual(["hello", "world"]);
+    });
+
+    it("ignores many punctuation marks between words", function(){
+      expect(toWordsList("hello&*($#@world")).toEqual(["hello", "world"]);
+    });
+
+    it("hasn't words if string is empty", function(){
+      expect(toWordsList("")).toEqual([]);
+    });
+
+    it("hasn't words if string hasn't alphabetical symbols", function(){
+      expect(toWordsList("&$*@(%")).toEqual([]);
+    });
+
+  });
+
 });

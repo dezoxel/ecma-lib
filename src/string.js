@@ -26,23 +26,23 @@ toWordsList = function(inputString) {
     if(isAlpha(symbol)) continue;
 
     if(isWordPunctuationMark(symbol)) {
-      if(!isAPartOfWord(symbol, i, inputString)) {
-        saveWordTo(words, inputString, lastStartWordPos, i);
+      if(!isAPartOfWord(symbol, inputString, i)) {
+        cutAndSaveWordTo(words, inputString, lastStartWordPos, i);
         lastStartWordPos = i + 1;
       } else {
         continue;
       }
     } else {
-      saveWordTo(words, inputString, lastStartWordPos, i);
+      cutAndSaveWordTo(words, inputString, lastStartWordPos, i);
       lastStartWordPos = i + 1;
     }
   } 
-  saveWordTo(words, inputString, lastStartWordPos, i);
+  cutAndSaveWordTo(words, inputString, lastStartWordPos, i);
 
   return words;
 };
 
-saveWordTo = function(words, inputString, from, to) {
+cutAndSaveWordTo = function(words, inputString, from, to) {
   var lastWord = inputString.slice(from, to);
   if(lastWord != "") {
     words.push(lastWord);

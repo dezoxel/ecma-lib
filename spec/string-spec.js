@@ -1,5 +1,6 @@
 describe("String function", function(){
-  var punctuationMarks = function(){ return ["!", "\"", "'", "@", ":", ";", "*", "(", ")", "?", ".", "-"]; },
+  var punctuationMarks = function(){ return ["!", "\"", "@", ":", ";", "*", "(", ")", "?", ".", "-", "'"]; },
+      withoutWordPunctuation = function(){ return punctuationMarks().slice(0, punctuationMarks().length - 2) },
       latinSymbols = function(){ return ["a", "k", "z"]; },
       latinUppercasedSymbols = function(){ return ["A", "K", "Z"]; },
       cyrillicSymbols = function(){ return ["а", "в", "п", "о", "я"]; };
@@ -78,7 +79,6 @@ describe("String function", function(){
   });
 
   describe("isWordPunctuationMark()", function(){
-    var punctuationMarksCutted = function(){ return ["!", "\"", "@", ":", ";", "*", "(", ")", "?", "."]; };
 
     it("allows to use '-' inside of word", function(){
       expect(isWordPunctuationMark("-")).toBe(true);
@@ -95,7 +95,7 @@ describe("String function", function(){
     });
 
     it("rejects all other punctuation marks", function(){
-      punctuationMarksCutted().forEach(function(s){
+      withoutWordPunctuation().forEach(function(s){
         expect(isWordPunctuationMark(s)).toBe(false);
       });
     });
@@ -103,7 +103,6 @@ describe("String function", function(){
   });
 
   describe("toWordsList()", function(){
-    var punctuationMarksCutted = function(){ return ["!", "\"", "@", ":", ";", "*", "(", ")", "?", "."]; };
 
     describe("when whitespace", function() {
 
@@ -138,7 +137,7 @@ describe("String function", function(){
     });
 
     it("slices by any punctuation mark except ' and -", function(){
-      punctuationMarksCutted().forEach(function(s){
+      withoutWordPunctuation().forEach(function(s){
         expect(toWordsList("hello" + s + "world")).toEqual(["hello", "world"]);
       });
     });

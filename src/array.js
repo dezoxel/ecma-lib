@@ -1,4 +1,4 @@
-lengthsStringsFor = function(strings) {
+lengthsFor = function(strings) {
   var lengths = [],
       count = strings.length;
 

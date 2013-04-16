@@ -28,4 +28,32 @@ describe("Array function", function(){
 
   });
 
+  describe("lengthsFor()", function(){
+    var longString = function(){
+      var str = "1234567890",
+          iterations = 10;
+
+      for(var i = 0; i < iterations; i++) {
+        str += str.concat(str);
+      }
+      return str;
+    }
+
+    it("returns an array of lengths of specified elements", function(){
+      expect(lengthsFor(["aaa", "bbbb", "ccccc"])).toEqual([3,4,5]);
+    });
+
+    it("returns empty array if input array is empty", function(){
+      expect(lengthsFor([])).toEqual([]);
+    });
+
+    it("accepts strings with zero length", function(){
+      expect(lengthsFor([""])).toEqual([0])
+    });
+
+    it("works with long strings", function(){
+      expect(lengthsFor([longString()])).toEqual([longString().length]);
+    });
+  });
+
 });

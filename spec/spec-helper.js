@@ -1,4 +1,29 @@
-runSpecs = function() {
+require.config({
+  baseUrl: "specs",
+  paths: {
+    "vendor": "../../vendor",
+    "src": "../../src",
+  },
+  shim: {
+    "vendor/jasmine/jasmine-html": {
+      deps: ["vendor/jasmine/jasmine"],
+      exports: "jasmine"
+    },
+    "string-spec": {
+      deps: ["src/string"],
+    },
+    "array-spec": {
+      deps: ["src/array"],
+    },
+  },
+});
+
+modules = ["vendor/jasmine/jasmine-html",
+  "src/string", "string-spec",
+  "src/array", "array-spec",
+];
+
+require(modules, function(jasmine){
   var jasmineEnv = jasmine.getEnv();
   jasmineEnv.updateInterval = 1000;
 
@@ -10,17 +35,5 @@ runSpecs = function() {
     return htmlReporter.specFilter(spec);
   };
 
-  var currentWindowOnload = window.onload;
-
-  window.onload = function() {
-    if (currentWindowOnload) {
-      currentWindowOnload();
-    }
-    execJasmine();
-  };
-
-  function execJasmine() {
-    jasmineEnv.execute();
-  }
-
-};
+  jasmineEnv.execute();
+});

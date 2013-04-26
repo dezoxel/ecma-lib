@@ -1,4 +1,7 @@
-var EcmaString = (function(){
+var EcmaLib = EcmaLib || {};
+
+EcmaLib.string = (function(){
+  var module = {};
 
   //--------------------------------------------------------------------------------------------------------------------//
   /**
@@ -17,7 +20,7 @@ var EcmaString = (function(){
    * 6. If it is not wpm - it is word delimiter. Save the word and update start position of next word.
    * 7. If we reached the end of string - save last word.
    */
-  function toWordsList(inputString) {
+  module.toWordsList = function(inputString) {
     var words = [],
         size = inputString.length,
         symbol,
@@ -25,10 +28,10 @@ var EcmaString = (function(){
 
     for(var i = 0; i < size; i++) {
       symbol = inputString.charAt(i);
-      if(isAlpha(symbol)) continue;
+      if(this.isAlpha(symbol)) continue;
 
-      if(isWordPunctuationMark(symbol)) {
-        if(!isAPartOfWord(symbol, inputString, i)) {
+      if(this.isWordPunctuationMark(symbol)) {
+        if(!this.isAPartOfWord(symbol, inputString, i)) {
           cutAndSaveWordTo(words, inputString, lastStartWordPos, i);
           lastStartWordPos = i + 1;
         } else {
@@ -42,22 +45,39 @@ var EcmaString = (function(){
     cutAndSaveWordTo(words, inputString, lastStartWordPos, i);
 
     return words;
-  }
+  };
 
-  function isAlpha(symbol) {
+  module.isAlpha = function(symbol) {
     symbol = symbol.toLowerCase();
     return symbol >= 'a' && symbol <= 'z';
   }
 
-  function isWordPunctuationMark(symbol) {
+  module.isWordPunctuationMark = function(symbol) {
     return symbol == '-' || symbol == '\'';
   }
 
-  function isAPartOfWord(symbol, word, symbolPos = null) {
-    if(symbolPos == null) {
+  module.isAPartOfWord = function(symbol, word, symbolPos) {
+    if(symbolPos === undefined) {
       symbolPos = word.indexOf(symbol); 
     }
-    return isAlpha(word.charAt(symbolPos+1)) && isAlpha(word.charAt(symbolPos-1));
+    return this.isAlpha(word.charAt(symbolPos+1)) && this.isAlpha(word.charAt(symbolPos-1));
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------//
+  module.maxLengthStringFrom = function(words, lengths) {
+    lengths = lengths || [];
+    var size = words.length,
+        lengths = lengths || lengthsStringsFor(words);
+
+    return words[maxValueIndex(lengths)];
+  }
+
+  module.minLengthStringFrom = function(words, lengths) {
+    lengths = lengths || [];
+    var size = words.length,
+        lengths = lengths || lengthsStringsFor(words);
+
+    return words[minValueIndex(lengths)];
   }
 
   // PRIVATE
@@ -68,25 +88,5 @@ var EcmaString = (function(){
     }
   }
 
-  //--------------------------------------------------------------------------------------------------------------------//
-  function maxLengthStringFrom(words, lengths = []) {
-    var size = words.length,
-        lengths = lengths || lengthsStringsFor(words);
-
-    return words[maxValueIndex(lengths)];
-  }
-
-  function minLengthStringFrom(words, lengths = []) {
-    var size = words.length,
-        lengths = lengths || lengthsStringsFor(words);
-
-    return words[minValueIndex(lengths)];
-  }
-
-  return {
-    "isAlpha": isAlpha,
-    "isAPartOfWord": isAPartOfWord,
-    "isWordPunctuationMark": isWordPunctuationMark,
-    "toWordsList": toWordsList,
-  };
+  return module;
 })();

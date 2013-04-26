@@ -1,6 +1,9 @@
-var EcmaArray = (function(){
+var EcmaLib = EcmaLib || {};
 
-  function lengthsFor(strings) {
+EcmaLib.array = (function(){
+  var module = {};
+
+  module.lengthsFor = function(strings) {
     var lengths = [],
         count = strings.length;
 
@@ -10,7 +13,8 @@ var EcmaArray = (function(){
     return lengths;
   }
 
-  function maxOrMinIndexFrom(numbers, type = "max") {
+  module.maxOrMinIndexFrom = function(numbers, type) {
+    type = type || "max";
     var count = numbers.length,
         index = 0;
 
@@ -31,10 +35,6 @@ var EcmaArray = (function(){
     return index;
   }
 
-  return {
-    "lengthsFor": lengthsFor,
-    "maxOrMinIndexFrom": maxOrMinIndexFrom,
-  };
-
+  return module;
 })();
 

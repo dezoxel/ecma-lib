@@ -18,10 +18,7 @@ require.config({
   },
 });
 
-modules = ["vendor/jasmine/jasmine-html",
-  "src/string", "string-spec",
-  "src/array", "array-spec",
-];
+modules = ["vendor/jasmine/jasmine-html", "string-spec", "array-spec"];
 
 require(modules, function(jasmine){
   var jasmineEnv = jasmine.getEnv();
